@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Network IDS — SOC Dashboard</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="dot"></span>
+    <h1>Network IDS <span class="muted">/ SOC Dashboard</span></h1>
+  </div>
+  <div class="topbar-right">
+    <span id="last-updated" class="muted">—</span>
+    <button id="simulate-btn" class="btn primary">▶ Simulate 20 Flows</button>
+  </div>
+</header>
+
+<section class="cards">
+  <div class="card"><span class="label">Total Flows</span><span id="c-total" class="value">0</span></div>
+  <div class="card"><span class="label">Normal</span><span id="c-normal" class="value ok">0</span></div>
+  <div class="card"><span class="label">Suspicious</span><span id="c-suspicious" class="value warn">0</span></div>
+  <div class="card"><span class="label">Open Alerts</span><span id="c-open" class="value warn">0</span></div>
+  <div class="card"><span class="label">Critical Alerts</span><span id="c-critical" class="value crit">0</span></div>
+  <div class="card"><span class="label">Avg Risk Score</span><span id="c-avgrisk" class="value">0</span></div>
+</section>
+
+<section class="charts">
+  <div class="panel wide"><h3>Traffic Over Time</h3><canvas id="ch-timeline"></canvas></div>
+  <div class="panel"><h3>Alerts by Severity</h3><canvas id="ch-severity"></canvas></div>
+  <div class="panel"><h3>Protocol Distribution</h3><canvas id="ch-protocol"></canvas></div>
+  <div class="panel"><h3>Top Alert Types</h3><canvas id="ch-types"></canvas></div>
+  <div class="panel"><h3>Top Destination Ports</h3><canvas id="ch-ports"></canvas></div>
+  <div class="panel"><h3>Top Source IPs by Alerts</h3><canvas id="ch-sources"></canvas></div>
+  <div class="panel"><h3>Risk Score Distribution</h3><canvas id="ch-risk"></canvas></div>
+  <div class="panel"><h3>Alert Status</h3><canvas id="ch-status"></canvas></div>
+</section>
+
+<section class="panel table-panel">
+  <div class="table-head">
+    <h3>Recent Alerts</h3>
+    <div class="filters">
+      <select id="f-severity">
+        <option value="">All Severities</option>
+        <option>INFO</option><option>LOW</option>
+        <option>MEDIUM</option><option>HIGH</option><option>CRITICAL</option>
+      </select>
+      <select id="f-status">
+        <option value="">All Statuses</option>
+        <option>NEW</option><option>INVESTIGATING</option>
+        <option>RESOLVED</option><option>FALSE_POSITIVE</option>
+      </select>
+      <select id="f-protocol">
+        <option value="">All Protocols</option>
+        <option>TCP</option><option>UDP</option><option>ICMP</option>
+      </select>
+      <button id="refresh-btn" class="btn">↻ Refresh</button>
+    </div>
+  </div>
+
+  <table id="alerts-table">
+    <thead>
+      <tr>
+        <th>Time</th><th>Source IP</th><th>Destination IP</th><th>Proto</th>
+        <th>Alert</th><th>Severity</th><th>Risk</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<!-- Investigation Modal -->
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-head">
+      <h2 id="m-title">Alert Investigation</h2>
+      <button id="m-close" class="btn">✕</button>
+    </div>
+    <div id="m-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+.Python
+
+# --- Environment / secrets ---
+.env
+.env.local
+*.key
+*.pem
+
+# --- Generated data & models ---
+data/*.db
+data/ids.db
+data/baseline.json
+models/*.joblib
+reports/*.json
+reports/*.pdf
+
+# Keep the sample dataset so the repo is clone-and-run
+!data/network_traffic.csv
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

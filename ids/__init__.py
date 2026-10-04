@@ -1,0 +1,1 @@
+"""Core IDS detection engine package."""
